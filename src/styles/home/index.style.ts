@@ -164,6 +164,7 @@ export const App = {
   height: 100%;
   border-radius: 1px;
   margin-left: 8px;
+  padding-bottom: 15px
   `,
 
   taskName: styled.Text`
