@@ -9,7 +9,7 @@ export const App = {
     height: 60px;
     width: 100%;
     position: absolute;
-    top: 50px;
+    top: 30px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -24,7 +24,7 @@ export const App = {
   `,
 
   icon: styled(FontAwesomeIcon)`
-    color: ${getTheme().background.main};
+    color: ${getTheme().background.contrast};
     left: 10px;
   `,
 

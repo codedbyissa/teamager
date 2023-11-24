@@ -30,6 +30,7 @@ let modeTheme:string = "light";
 
 export function getTheme() {
   return {
+    mode: modeTheme, 
     background: defaultTheme.background[modeTheme as keyof typeof defaultTheme.background],
     colors: {
       primary: customTheme.colors.primary? customTheme.colors.primary : defaultTheme.colors.primary,

@@ -1,4 +1,4 @@
-import { App } from "../../styles/PassForgot/index.style";
+import { App } from "../../styles/passForgot/index.style";
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 

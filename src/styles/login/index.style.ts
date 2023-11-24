@@ -84,7 +84,7 @@ export const App = {
   field: styled.TextInput`
   height: 50px;
   width: 100%;
-  background-color: ${getTheme().background.main};
+  background-color: ${getTheme().background.contrast};
   padding: 15px;
   margin-bottom: 16px;
   border-radius: 30px;

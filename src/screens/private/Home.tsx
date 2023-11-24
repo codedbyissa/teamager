@@ -1,157 +1,43 @@
 
 import { App } from "../../styles/home/index.style";
-import { useRef, useState } from "react";
-import { TouchableOpacity } from 'react-native';
+import { TasksService } from "../../services/tasks.service";
+import { ProjetcsService } from "../../services/projects.service";
+import { useRef, useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import TopBar from "../../shared/components/topBar";
-import { NavigationContainer } from '@react-navigation/native';
+import {Drawer} from "../../shared/components/drawer";
 import { FlashList } from "@shopify/flash-list";
-import { faHourglassHalf } from '@fortawesome/free-solid-svg-icons';
-import { format, isToday, parseISO } from 'date-fns';
-
-
+import { shortcutTasks, shortcutProjects} from "../../shared/components/shortcuts";
+import { getTheme } from "../../styles/themes/theme";
+import CalendarPicker from 'react-native-calendar-picker';
 
 const Home = () => {
   
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<any>(); 
 
-  const [tasks, setTasks] = useState([
-    {
-      "id": 1,
-      "name": "cursus,",
-      "date": "2023-11-22 17:52:57"
-    },
-    {
-      "id": 2,
-      "name": "sit amet,",
-      "date": "2023-05-20 01:37:52"
-    },
-    {
-      "id": 3,
-      "name": "urna",
-      "date": "2023-05-07 08:32:42"
-    },
-    {
-      "id": 4,
-      "name": "ultrices posuere cubilia",
-      "date": "2023-01-25 06:31:31"
-    },
-    {
-      "id": 5,
-      "name": "Aliquam ornare, libero",
-      "date": "2023-10-29 02:33:51"
-    },
-    {
-      "id": 6,
-      "name": "est arcu",
-      "date": "2023-05-18 12:45:56"
-    },
-    {
-      "id": 7,
-      "name": "parturient",
-      "date": "2023-07-19 00:27:27"
-    },
-    {
-      "id": 8,
-      "name": "venenatis a, magna.",
-      "date": "2023-08-08 19:27:45"
-    },
-    {
-      "id": 9,
-      "name": "tristique neque",
-      "date": "2023-09-11 04:35:03"
-    },
-    {
-      "id": 10,
-      "name": "Suspendisse aliquet molestie",
-      "date": "2023-01-28 15:11:25"
-    },
-    {
-      "id": 11,
-      "name": "malesuada. Integer",
-      "date": "2023-04-20 21:48:26"
-    },
-    {
-      "id": 12,
-      "name": "justo",
-      "date": "2023-11-10 08:58:25"
-    },
-    {
-      "id": 13,
-      "name": "felis,",
-      "date": "2023-11-18 15:10:07"
-    },
-    {
-      "id": 14,
-      "name": "ac",
-      "date": "2023-09-21 21:29:37"
-    },
-    {
-      "id": 15,
-      "name": "mollis nec,",
-      "date": "2022-12-15 04:08:50"
-    },
-    {
-      "id": 16,
-      "name": "natoque",
-      "date": "2023-04-18 21:08:26"
-    },
-    {
-      "id": 17,
-      "name": "a",
-      "date": "2023-08-01 18:11:13"
-    },
-    {
-      "id": 18,
-      "name": "metus vitae",
-      "date": "2023-08-14 08:27:18"
-    },
-    {
-      "id": 19,
-      "name": "Phasellus at augue",
-      "date": "2023-07-17 03:30:16"
-    },
-    {
-      "id": 20,
-      "name": "turpis. In",
-      "date": "2023-04-14 18:31:00"
-    }
-  ]);
+  const [tasks, setTasks]:any = useState([]);
+  const [projects, setProjects]:any = useState([]);
 
-  const taskItems = ({ item }: { item: any }) => {
+  useEffect(() => {
+    const datas = async () => {
+      try {
+        const dataTasks = await TasksService.getTaks();
+        setTasks(dataTasks);
+        const dataProjects = await ProjetcsService.getProjects();
+        setProjects(dataProjects);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-    const date = parseISO(item.date);
-    const today = isToday(date);
-    let formatting;
-    if (today) {
-      formatting = "'Hoje,' HH:mm";
-    } else {
-      formatting = "dd MMM, yy - HH:mm";
-    }
-  
-    const formatting_date = format(date, formatting, { locale: require('date-fns/locale/pt') });
-
-    return (
-      <TouchableOpacity>
-        <App.task>
-          <App.taskLine>
-          </App.taskLine>
-          <App.taskInfos>
-          <App.taskName>{item.name}</App.taskName>
-          <App.time>
-            <App.icon icon={ faHourglassHalf } size={15}/>
-            <App.timeText>{ today? formatting_date : (formatting_date).toUpperCase()}</App.timeText>
-          </App.time>
-          <App.status>em Progresso</App.status>
-          </App.taskInfos>
-        </App.task>
-      </TouchableOpacity>
-    );
-  };
+    datas();
+    
+  }, []);
 
   return (
     <App.main> 
       <TopBar/>
+      <Drawer/>
       <App.content>
 
         <App.welcomeUser>
@@ -172,14 +58,60 @@ const Home = () => {
           <App.shortcutsXY>
 
             <App.shortcutY>
-              <App.shortcutText>Calendário</App.shortcutText>
+              <App.shortcutInfos>
+                <App.shortcutTitle>Calendário</App.shortcutTitle>
+                <App.shortcutDescription>Calendário de eventos e compromissos</App.shortcutDescription>
+                <App.calendar>
+                <CalendarPicker width={170}
+                textStyle={{
+                  fontSize: 12,
+                  color: getTheme().colors.primary,
+                }}
+                monthTitleStyle={{
+                  fontSize: 13,
+                  color: getTheme().colors.primary,
+                }}
+                yearTitleStyle={{
+                  fontSize: 13,
+                  color: getTheme().colors.primary,
+                }}
+                previousTitle="<<"
+                nextTitle=">>"
+                nextTitleStyle={{
+                  fontSize: 16,
+                  right: 10,
+                  color: getTheme().colors.primary,
+                }}
+                previousTitleStyle={{
+                  fontSize: 16,
+                  left: 10,
+                  color: getTheme().colors.primary,
+                }}
+                todayTextStyle={{
+                  color: "#fff"
+                }}
+                selectedDayStyle={{
+                  backgroundColor: getTheme().colors.primary
+                }}
+                selectedDayTextColor="#fff"
+                todayBackgroundColor={getTheme().colors.secondary}
+                selectMonthTitle="Selecione o mês "
+                selectYearTitle="Selecione o ano"
+                weekdays={['D', 'S', 'T', 'Q', 'Q', 'S', 'S']}
+                months={['JAN', 'FEV', 'MAR', 'ABR', 'MAI','JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ']}
+                />
+                </App.calendar>
+               
+              </App.shortcutInfos>
             </App.shortcutY>
 
+              {/* Tasks */}
+
             <App.shortcutY> 
-              <App.instructions>
-                <App.shortcutText>Tasks</App.shortcutText>
-                <App.taskSubText>Tarefas pendentes com o prazo perto de expirar</App.taskSubText>
-              </App.instructions>
+              <App.shortcutInfos>
+                <App.shortcutTitle>Tasks</App.shortcutTitle>
+                <App.shortcutDescription>Tarefas pendentes com o prazo perto de expirar</App.shortcutDescription>
+              </App.shortcutInfos>
 
               <App.tasks>
               <FlashList
@@ -189,14 +121,30 @@ const Home = () => {
               }}
               data={tasks}
               estimatedItemSize={tasks.length}
-              renderItem={taskItems}/>
+              renderItem={shortcutTasks}/>
               </App.tasks>
-            </App.shortcutY>
+            </App.shortcutY> 
 
           </App.shortcutsXY>
 
+            {/* Projects */}
+
           <App.shortcutX>
-              <App.shortcutText>Projetos destacados</App.shortcutText>
+              <App.shortcutInfos>
+                <App.shortcutTitle>Projetos destacados</App.shortcutTitle>
+                <App.shortcutDescription>Projetos favoritados por você</App.shortcutDescription>
+              </App.shortcutInfos>
+              <App.projects>
+              <FlashList
+              horizontal={true}
+              ref={useRef<FlashList<number> | null>(null)}
+              keyExtractor={(item: any) => {
+                return item.id.toString();
+              }}
+              data={projects}
+              estimatedItemSize={projects.length}
+              renderItem={shortcutProjects}/>
+              </App.projects>
           </App.shortcutX>
 
         </App.shortcuts>

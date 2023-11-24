@@ -10,15 +10,21 @@ const TopBar = () => {
 
   return (
     <App.bar>
-      <App.icon icon={ faBars } size={32}/>
+      <TouchableOpacity>
+        <App.icon icon={ faBars } size={32}/>
+      </TouchableOpacity>
       <App.icons>
-      <App.icon icon={ faGear } size={32}/>
-      <App.alert>
-        <App.icon icon={ faBell } size={32}/>
-        <App.alertConteiner>
-          <App.alertText>+99</App.alertText>
-        </App.alertConteiner>
-      </App.alert>
+      <TouchableOpacity>
+        <App.icon icon={ faGear } size={32}/>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <App.alert>
+          <App.icon icon={ faBell } size={32}/>
+          <App.alertConteiner>
+            <App.alertText>+99</App.alertText>
+          </App.alertConteiner>
+        </App.alert>
+      </TouchableOpacity>
       </App.icons>
     </App.bar>
   );

@@ -113,7 +113,13 @@ export const App = {
     elevation: 1;
   `,
 
-  shortcutText: styled.Text`
+  shortcutInfos: styled.View`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  `,
+
+  shortcutTitle: styled.Text`
   color: ${getTheme().background.text};
   font-size: 20px;
   line-height: 20px;
@@ -121,19 +127,16 @@ export const App = {
   font-family: "Outfit_600SemiBold";
   `,
 
-  instructions: styled.View`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  `,
-
-  taskSubText: styled.Text`
+  shortcutDescription: styled.Text`
   color: ${getTheme().background.text};
   opacity: 0.6;
   font-size: 15px;
   margin-top: 2px;
   font-family: "Outfit_500Medium";
+  text-align: center;
   `,
+
+  // tasks
 
   tasks: styled.View`
   width: 100%;
@@ -199,6 +202,55 @@ export const App = {
   margin-left: 30px;
   font-family: "Outfit_600SemiBold";
   `,
+
+  // projects
+
+  projects: styled.View`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin: 5px;
+  `,
+
+  project: styled.View`
+  width: 200px;
+  height: 100%;
+  margin: 5px;
+  `,
+
+  projectImage: styled.Image`
+  width: 100%;
+  height: 80px;
+  border-radius: 10px;
+  `,
+
+  projectContent: styled.View`
+  width: 100%;
+  margin: 5px;
+  margin-top: 10px;
+  `,
+
+  fav: styled(FontAwesomeIcon)`
+    color: #D50000;
+  `,
+
+  projectName: styled.Text`
+  color: ${getTheme().background.text};
+  font-family: "Outfit_500Medium";
+  font-size: 20px;
+  margin-left: 7px;
+`,
+
+// Calendar
+
+  calendar: styled.View`
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+  `,
+  
 
   }
   
